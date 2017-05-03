@@ -1,0 +1,17 @@
+table {
+    border: 1px solid mediumaquamarine;
+    line-height: 1.5;
+}
+
+td {
+    padding: 10px;
+    background-color: white;
+}
+
+body {
+    background-color: gray;
+}
+
+.exists {
+    background-color: black;
+}
