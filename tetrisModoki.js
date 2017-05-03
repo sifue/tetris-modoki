@@ -42,6 +42,19 @@
         }
     }
 
+    function addListener() {
+        document.addEventListener('keydown', (event) => {
+            if (event.key == 'ArrowLeft') {
+                moveBlockPosition(-1, 0, state.fallingBlock);
+            } else if (event.key == 'ArrowRight') {
+                moveBlockPosition(1, 0, state.fallingBlock);
+            } else if (event.key == 'ArrowDown') {
+                moveBlockPosition(0, 1, state.fallingBlock);
+            }
+        });
+    }
+
+
     function mainLoop() {
         render();
         setTimeout(mainLoop, roopInterval);
@@ -75,10 +88,7 @@
                     state.fallingBlock = null;
                 } else {
                     // move
-                    for (let i = 0; i < moveBlock.length; i++) {
-                        moveBlock[i].y = moveBlock[i].y + 1;
-                    }
-                    block = moveBlock;
+                    block =  moveBlockPosition(0, 1, moveBlock);
                 }
                 state.lastMovedTime = now.getTime();
             } else {
@@ -146,7 +156,19 @@
         return (now.getTime() - state.lastMovedTime) >= moveInterval;
     }
 
+    function moveBlockPosition(dx, dy, moveBlock) {
+        if (!isGrounding(moveBlock)) {
+            for (let i = 0; i < moveBlock.length; i++) {
+                moveBlock[i].x = moveBlock[i].x + dx;
+                moveBlock[i].y = moveBlock[i].y + dy;
+            }
+        }
+        return moveBlock;
+    }
+
+
     createTable();
     clearCells();
+    addListener();
     mainLoop();
 })();
